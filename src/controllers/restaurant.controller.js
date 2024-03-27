@@ -1,0 +1,96 @@
+
+import RestaurantService from '../services/restaurant.service.js';
+import APIMessages from '../utils/messages.util.js';
+import ServiceError from '../utils/serviceError.util.js';
+
+
+export default class RestaurantController {
+    static async createRestaurant(req, res) {
+        try {
+            const restaurant = await RestaurantService.create(req.body, req.file);
+            res.status(201).json(restaurant);
+        } catch (error) {
+            if (error instanceof ServiceError) {
+                return res.status(400).json({ error: error.message });
+            } else {
+                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
+            }
+        }
+    }
+
+    static async listRestaurants(req, res) {
+        try {
+            const restaurants = await RestaurantService.list();
+            res.status(200).json(restaurants);
+        } catch (error) {
+            if (error instanceof ServiceError) {
+                return res.status(400).json({ error: error.message });
+            } else {
+                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
+            }
+        }
+    }
+
+    static async getRestaurant(req, res) {
+        try {
+            const { id } = req.body;
+            const { name } = req.body;
+
+            const restaurant = await RestaurantService.get(id, name);
+            res.status(200).json(restaurant);
+        } catch (error) {
+            if (error instanceof ServiceError) {
+                return res.status(404).json({ error: error.message });
+            } else {
+                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
+            }
+        }
+    }
+
+    static async updateRestaurant(req, res) {
+        try {
+            const id = req.restaurant.id;
+            const updatedRestaurant = await RestaurantService.update(id, req.body, req.file);
+            res.status(200).json(updatedRestaurant);
+        } catch (error) {
+            if (error instanceof ServiceError) {
+                return res.status(400).json({ error: error.message });
+            } else {
+                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
+            }
+        }
+    }
+
+    static async deleteRestaurant(req, res) {
+        try {
+            const id = req.restaurant.id;
+            await RestaurantService.delete(id);
+            res.status(204).send();
+        } catch (error) {
+            if (error instanceof ServiceError) {
+                return res.status(400).json({ error: error.message });
+            } else {
+                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
+            }
+        }
+    }
+
+    static async authenticate(req, res) {
+        try {
+            const { username, password } = req.body;
+            if (!username || !password) {
+                return res.status(400).json({ error: 'Username and password are required' });
+            }
+
+            const token = await RestaurantService.login(username, password);
+
+            return res.status(200).json({ token });
+        } catch (error) {
+            if (error instanceof ServiceError) {
+                return res.status(400).json({ error: error.message });
+            } else {
+                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
+            }
+        }
+    }
+}

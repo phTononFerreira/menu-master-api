@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import pg from "pg"
 
 dotenv.config(); 
 
@@ -8,6 +9,7 @@ const sequelizeConfig = {
   password: process.env.DATABASE_PASSWORD,
   host: process.env.DATABASE_HOST,
   dialect: 'postgres',
+  dialectModule: pg,
   dialectOptions: {
     ssl: {
       require: true,

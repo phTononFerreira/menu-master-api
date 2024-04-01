@@ -66,19 +66,18 @@ CLOUDINARY_API_SECRET=segredo_da_api_do_cloudinary
 
 
 ## Rotas
-Aqui estão todas as rotas disponíveis na API Menu Master:
 
 - **Categoria:**
-  - `POST /category`: Cria uma nova categoria.
-  - `DELETE /category`: Exclui uma categoria.
-  - `PUT /category`: Atualiza uma categoria.
+  - `POST /category`: Cria uma nova categoria. (Autenticado)
+  - `DELETE /category`: Exclui uma categoria. (Autenticado)
+  - `PUT /category`: Atualiza uma categoria. (Autenticado)
   - `GET /category`: Retorna uma categoria específica.
   - `GET /categories`: Retorna todas as categorias.
 
 - **Produto:**
-  - `POST /product`: Cria um novo produto.
-  - `DELETE /product`: Exclui um produto.
-  - `PUT /product`: Atualiza um produto.
+  - `POST /product`: Cria um novo produto. (Autenticado)
+  - `DELETE /product`: Exclui um produto. (Autenticado)
+  - `PUT /product`: Atualiza um produto. (Autenticado)
   - `GET /product`: Retorna um produto específico.
   - `GET /products`: Retorna todos os produtos.
 
@@ -90,7 +89,7 @@ Aqui estão todas as rotas disponíveis na API Menu Master:
 - **Restaurante:**
   - `GET /restaurant`: Retorna um restaurante específico.
   - `POST /restaurant`: Cria um novo restaurante.
-  - `PUT /restaurant`: Atualiza um restaurante.
-  - `DELETE /restaurant`: Exclui um restaurante.
+  - `PUT /restaurant`: Atualiza um restaurante. (Autenticado)
+  - `DELETE /restaurant`: Exclui um restaurante. (Autenticado)
   - `GET /restaurants`: Retorna todos os restaurantes.
   - `POST /restaurant/login`: Autentica o restaurante.

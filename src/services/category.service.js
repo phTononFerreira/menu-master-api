@@ -27,8 +27,8 @@ class CategoryService {
         return category;
     }
 
-    static async get(id, restaurantId) {
-        const category = await Category.findOne({ where: { id, restaurantID: restaurantId } });
+    static async get(id) {
+        const category = await Category.findOne({ where: { id } });
         if (!category) {
             throw new ServiceError('Category not found');
         }

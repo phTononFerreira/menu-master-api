@@ -8,7 +8,7 @@ const productRouter = express.Router();
 productRouter.post('/product', authenticate, upload.single('image'), ProductController.createProduct);
 productRouter.delete('/product', authenticate, ProductController.deleteProduct);
 productRouter.put('/product', authenticate, upload.single('image'), ProductController.updateProduct);
-productRouter.get('/product', authenticate, ProductController.getProduct);
-productRouter.get('/products', authenticate, ProductController.getAllProducts);
+productRouter.get('/product', ProductController.getProduct);
+productRouter.get('/products', ProductController.getAllProducts);
 
 export default productRouter;

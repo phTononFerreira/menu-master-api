@@ -73,12 +73,12 @@ class ProductService {
     }
     
 
-    static async get(id, restaurantId) {
-        if(!restaurantId){
+    static async get(id) {
+        if(!id){
             throw new ServiceError('Missing \'id\' field');
         }
 
-        const product = await Product.findOne({ where: { id, restaurantID: restaurantId } });
+        const product = await Product.findOne({ where: { id } });
         if (!product) {
             throw new ServiceError('Product not found');
         }

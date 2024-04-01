@@ -46,7 +46,7 @@ class CategoryController {
 
   static async getCategory(req, res) {
     try {
-      const category = await CategoryService.get(req.body.id, req.restaurant.id);
+      const category = await CategoryService.get(req.body.id);
       res.json(category);
     } catch (error) {
       if (error instanceof ServiceError) {

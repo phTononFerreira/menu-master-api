@@ -1,12 +1,12 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import categoryRouter from './src/routes/category.router.js';
-import productRouter from './src/routes/product.router.js';
-import ratingRouter from './src/routes/rating.router.js';
-import restaurantRouter from './src/routes/restaurant.router.js';
-import APIMessages from './src/utils/messages.util.js';
-import sequelize from './src/utils/sequelize.util.js';
+import categoryRouter from './routes/category.router.js';
+import productRouter from './routes/product.router.js';
+import ratingRouter from './routes/rating.router.js';
+import restaurantRouter from './routes/restaurant.router.js';
+import APIMessages from './utils/messages.util.js';
+import sequelize from './utils/sequelize.util.js';
 
 dotenv.config();
 

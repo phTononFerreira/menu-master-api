@@ -9,9 +9,19 @@
 
 <h4 align="center">Estrutura back-end do projeto Menu Master ⚙️</h4>
 
-## Introdução
+<p align="center">
+  <a href="#introdução">Introdução</a> •
+  <a href="#instalação">Instalação</a> •
+  <a href="#configuração">Configuração</a> •
+  <a href="#inicialização">Inicialização</a> •
+  <a href="#rotas">Rotas</a>
+</p>
 
-A API do Menu Master é uma plataforma para visualizar cardápios de restaurantes e avaliar os pratos oferecidos. Ela fornece endpoints para interagir com os dados dos restaurantes, categorias de pratos, produtos e avaliações.
+## Introdução
+<p align="center">
+  O Menu Master é uma plataforma para visualizar cardápios de restaurantes e avaliar os pratos oferecidos. Nela você pode interagir com os dados dos restaurantes, categorias de pratos, produtos e avaliações.
+</p>
+
 
 ## Instalação
 

@@ -1,13 +1,13 @@
 import express from 'express';
-import upload from '../config/multer.config.js';
 import RestaurantController from '../controllers/restaurant.controller.js';
 import authenticate from '../middlewares/authenticate.middleware.js';
+import validateUpload from '../middlewares/validateUpload.middleware.js';
 
 const restaurantRouter = express.Router();
 
 restaurantRouter.get('/restaurant', RestaurantController.getRestaurant);
-restaurantRouter.post('/restaurant', upload.single('logo'), RestaurantController.createRestaurant);
-restaurantRouter.put('/restaurant', authenticate, upload.single('logo'), RestaurantController.updateRestaurant);
+restaurantRouter.post('/restaurant', validateUpload("logo"), RestaurantController.createRestaurant);
+restaurantRouter.put('/restaurant', authenticate, validateUpload("logo"), RestaurantController.updateRestaurant);
 restaurantRouter.delete('/restaurant', authenticate, RestaurantController.deleteRestaurant);
 restaurantRouter.get('/restaurants', RestaurantController.listRestaurants);
 

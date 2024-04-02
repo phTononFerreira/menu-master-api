@@ -1,4 +1,5 @@
 import { cloudinary } from '../config/cloudinary.config.js';
+import ServiceError from './serviceError.util.js';
 
 export async function uploadImage(file) {
     try {
@@ -12,6 +13,6 @@ export async function uploadImage(file) {
         return result.secure_url;
     } catch (error) {
         console.error('Error uploading image to Cloudinary:', error);
-        throw new Error('Error uploading image to Cloudinary');
+        throw new ServiceError('Error uploading image to Cloudinary');
     }
 }

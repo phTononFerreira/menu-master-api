@@ -142,7 +142,7 @@ class RestaurantService {
 
 function isValidUsername(username) {
     const regex = /^[a-zA-Z0-9_-]+$/;
-    return regex.test(username) && username.includes(" ");
+    return regex.test(username) && !username.includes(" ");
 }
 
 export default RestaurantService;

@@ -16,6 +16,10 @@ class RestaurantService {
             throw new ServiceError('Missing required fields');
         }
 
+        if(!isValidUsername(data.username)){
+            throw new ServiceError('Username cannot contain special characters');
+        }
+
         const existingRestaurant = await Restaurant.findOne({ where: { username: data.username } });
         if (existingRestaurant) {
             throw new ServiceError('Username already exists');
@@ -134,6 +138,11 @@ class RestaurantService {
             throw new ServiceError('Invalid credentials');
         }
     }
+}
+
+function isValidUsername(username) {
+    const regex = /^[a-zA-Z0-9_-]+$/;
+    return regex.test(username) && username.includes(" ");
 }
 
 export default RestaurantService;

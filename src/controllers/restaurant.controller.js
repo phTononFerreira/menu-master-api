@@ -10,6 +10,7 @@ export default class RestaurantController {
             const restaurant = await RestaurantService.create(req.body, req.file);
             res.status(201).json(restaurant);
         } catch (error) {
+            console.log(error)
             if (error instanceof ServiceError) {
                 return res.status(400).json({ error: error.message });
             } else {
@@ -34,9 +35,9 @@ export default class RestaurantController {
     static async getRestaurant(req, res) {
         try {
             const { id } = req.body;
-            const { name } = req.body;
+            const { username } = req.body;
 
-            const restaurant = await RestaurantService.get(id, name);
+            const restaurant = await RestaurantService.get(id, username);
             res.status(200).json(restaurant);
         } catch (error) {
             if (error instanceof ServiceError) {
@@ -53,6 +54,7 @@ export default class RestaurantController {
             const updatedRestaurant = await RestaurantService.update(id, req.body, req.file);
             res.status(200).json(updatedRestaurant);
         } catch (error) {
+            console.log(error);
             if (error instanceof ServiceError) {
                 return res.status(400).json({ error: error.message });
             } else {

@@ -16,7 +16,7 @@ class RestaurantService {
             throw new ServiceError('Missing required fields');
         }
 
-        if(!isValidUsername(data.username)){
+        if (!isValidUsername(data.username)) {
             throw new ServiceError('Username cannot contain special characters');
         }
 
@@ -50,7 +50,7 @@ class RestaurantService {
         if (!id && !usernameSearch) {
             throw new ServiceError('Invalid fields');
         }
-        
+
         let restaurant;
         if (id) {
             if (!isUUID(id)) {
@@ -74,11 +74,11 @@ class RestaurantService {
     }
 
     static async update(id, data, file) {
-        if (!data.name || !data.username || !data.password) {
+        if (!data.name || !data.password) {
             throw new ServiceError('Missing required fields');
         }
 
-        const existingRestaurant = await Restaurant.findOne({ where: { username: data.username } });
+        const existingRestaurant = await Restaurant.findOne({ where: { id: id } });
         if (!existingRestaurant) {
             throw new ServiceError('Restaurant not found');
         }
@@ -90,7 +90,7 @@ class RestaurantService {
         const restaurantData = {
             name: data.name,
             logo: imageUrl,
-            username: data.username,
+            username: existingRestaurant.username,
             password: hashedPassword
         };
 

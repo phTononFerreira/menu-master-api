@@ -5,7 +5,7 @@ import validateUpload from '../middlewares/validateUpload.middleware.js';
 
 const restaurantRouter = express.Router();
 
-restaurantRouter.get('/restaurant', RestaurantController.getRestaurant);
+restaurantRouter.get('/restaurant/:username', RestaurantController.getRestaurant);
 restaurantRouter.post('/restaurant', validateUpload("logo"), RestaurantController.createRestaurant);
 restaurantRouter.put('/restaurant', authenticate, validateUpload("logo"), RestaurantController.updateRestaurant);
 restaurantRouter.delete('/restaurant', authenticate, RestaurantController.deleteRestaurant);

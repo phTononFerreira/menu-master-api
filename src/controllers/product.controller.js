@@ -49,7 +49,7 @@ export default class ProductController {
 
     static async getProduct(req, res) {
         try {
-            const product = await ProductService.get(req.body.id);
+            const product = await ProductService.get(req.params.id);
             res.status(200).json(product);
         } catch (error) {
             console.log(error)

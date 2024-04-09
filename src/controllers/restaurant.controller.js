@@ -35,8 +35,8 @@ export default class RestaurantController {
     static async getRestaurant(req, res) {
         try {
             const { id } = req.body;
-            const { username } = req.body;
-
+            const { username } = req.params;
+            
             const restaurant = await RestaurantService.get(id, username);
             res.status(200).json(restaurant);
         } catch (error) {

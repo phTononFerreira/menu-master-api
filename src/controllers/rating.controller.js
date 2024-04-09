@@ -5,7 +5,7 @@ import RatingService from './../services/rating.service.js';
 class RatingController {
   static async getRating(req, res) {
     try {
-      const rating = await RatingService.get(req.body.productID);
+      const rating = await RatingService.get(req.params.productID);
       res.json(rating);
     } catch (error) {
       console.log(error)
@@ -33,7 +33,7 @@ class RatingController {
 
   static async rateAverage(req, res) {
     try {
-      const avgRating = await RatingService.rateAverage(req.body.productID);
+      const avgRating = await RatingService.rateAverage(req.params.productID);
       res.json(avgRating);
     } catch (error) {
       console.log(error)

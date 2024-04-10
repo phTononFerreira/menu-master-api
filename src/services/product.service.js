@@ -87,7 +87,16 @@ class ProductService {
     }
 
     static async getAll(restaurantId) {
-        const products = await Product.findAll({ where: { restaurantID: restaurantId } });
+        const products = await Product.findAll({ 
+            where: { restaurantID: restaurantId },
+            attributes: ['id', 'name', 'description', 'options', 'price', 'image', 'restaurantID', 'createdAt', 'updatedAt'],
+            include: [{
+                model: Product.sequelize.models.Category,
+                as: 'category',
+                attributes: ['id', 'name']
+            }]
+        });
+
         return products;
     }
 }

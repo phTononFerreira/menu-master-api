@@ -55,3 +55,5 @@ Product.init(
         tableName: 'products'
     }
 );
+
+Product.belongsTo(sequelize.models.Category, { as: 'category', foreignKey: 'categoryID' });

@@ -31,4 +31,3 @@ Category.init({
         tableName: 'categories'
     }
 );
-

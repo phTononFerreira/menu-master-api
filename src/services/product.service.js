@@ -79,7 +79,15 @@ class ProductService {
             throw new ServiceError('Missing \'id\' field');
         }
 
-        let product = await Product.findOne({ where: { id } });
+        let product = await Product.findOne({
+            where: { id },
+            attributes: ['id', 'name', 'description', 'options', 'price', 'image', 'restaurantID', 'createdAt', 'updatedAt'],
+            include: [{
+                model: Product.sequelize.models.Category,
+                as: 'category',
+                attributes: ['id', 'name']
+            }]
+        });
         if (!product) {
             throw new ServiceError('Product not found');
         }
@@ -99,7 +107,7 @@ class ProductService {
     }
 
     static async getAll(restaurantId) {
-        if(!restaurantId) throw new ServiceError('Missing \'restaurantId\' field');
+        if (!restaurantId) throw new ServiceError('Missing \'restaurantId\' field');
 
         let products = await Product.findAll({
             where: { restaurantID: restaurantId },

@@ -63,7 +63,7 @@ export default class ProductController {
 
     static async getAllProducts(req, res) {
         try {
-            const products = await ProductService.getAll(req.body.id);
+            const products = await ProductService.getAll(req.params.id);
             res.status(200).json(products);
         } catch (error) {
             if (error instanceof ServiceError) {

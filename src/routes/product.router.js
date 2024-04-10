@@ -9,6 +9,6 @@ productRouter.post('/product', authenticate, validateUpload('image'), ProductCon
 productRouter.delete('/product', authenticate, ProductController.deleteProduct);
 productRouter.put('/product', authenticate, validateUpload('image'), ProductController.updateProduct);
 productRouter.get('/product/:id', ProductController.getProduct);
-productRouter.get('/products', ProductController.getAllProducts);
+productRouter.get('/products/:id', ProductController.getAllProducts);
 
 export default productRouter;

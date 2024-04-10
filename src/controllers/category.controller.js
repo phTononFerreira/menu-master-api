@@ -59,7 +59,7 @@ class CategoryController {
 
   static async getAllCategories(req, res) {
     try {
-      const categories = await CategoryService.getAll(req.restaurant.id);
+      const categories = await CategoryService.getAll(req.params.id);
       res.json(categories);
     } catch (error) {
       if (error instanceof ServiceError) {

@@ -101,7 +101,7 @@ class ProductService {
 
             product = { ...product.toJSON(), averageRating };
         }
-
+        console.log(product)
         return product;
 
     }
@@ -122,17 +122,17 @@ class ProductService {
         products = await Promise.all(products.map(async (product) => {
             const ratings = await Rating.findAll({ where: { productID: product.id } });
 
+            let averageRating = null;
             if (ratings.length > 0) {
                 const totalRatings = ratings.length;
                 const totalRate = ratings.reduce((acc, curr) => acc + curr.rate, 0);
-                const averageRating = totalRate / totalRatings;
-
-                return { ...product.toJSON(), averageRating };
+                averageRating = totalRate / totalRatings;
             }
 
+            return { ...(product && product.toJSON()), averageRating };
         }));
 
-        return products;
+        return products.filter(product => product !== undefined);
     }
 
 

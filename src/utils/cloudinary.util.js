@@ -1,4 +1,4 @@
-import { cloudinary } from '../config/cloudinary.config.js';
+import { cloudinary, uploadOptions } from '../config/cloudinary.config.js';
 import ServiceError from './serviceError.util.js';
 
 export async function uploadImage(file) {
@@ -6,9 +6,8 @@ export async function uploadImage(file) {
         const b64 = Buffer.from(file.buffer).toString("base64");
         let dataURI = "data:" + file.mimetype + ";base64," + b64;
 
-        const result = await cloudinary.uploader.upload(dataURI, {
-            resource_type: "auto",
-        });
+
+        const result = await cloudinary.uploader.upload(dataURI, uploadOptions);
 
         return result.secure_url;
     } catch (error) {

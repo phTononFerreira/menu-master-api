@@ -10,7 +10,10 @@ const uploadOptions = {
     resource_type: 'image',
     quality: 'auto:low', 
     fetch_format: 'auto', 
-    folder: 'compressed_images'
+    folder: 'compressed_images',
+    width: 800,
+    height: 800,
+    crop: 'fill'
 };
 
 export { cloudinary, uploadOptions };

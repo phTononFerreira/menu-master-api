@@ -46,7 +46,7 @@ class RestaurantService {
 
 
     static async list() {
-        let restaurants = await client.getSync('restaurants');
+        let restaurants = await client.getSync('cache:restaurants');
         if (restaurants) {
             return JSON.parse(restaurants);
         }
@@ -54,8 +54,7 @@ class RestaurantService {
         restaurants = await Restaurant.findAll({
             attributes: { exclude: ['password'] }
         });
-
-        await client.setSync('restaurants', JSON.stringify(restaurants));
+        await client.setSync('cache:restaurants', JSON.stringify(restaurants), 10);
 
         return restaurants;
     }

@@ -23,6 +23,12 @@ client.connect((err) => {
 })
 
 client.getSync = promisify(client.get);
-client.setSync = promisify(client.set);
+client.setSync = async (key, value, ttlInSeconds) => {
+    try {
+        await client.setEx(key, ttlInSeconds, value);
+    } catch (error) {
+        console.error(`Erro ao definir a chave '${key}':`, error);
+    }
+};
 
 export default client;

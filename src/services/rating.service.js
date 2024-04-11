@@ -13,13 +13,27 @@ class RatingService {
             throw new ServiceError('Product not found');
         }
 
-        const rating = await Rating.findAll({ where: { productID: productID } });
+        const rating = await Rating.findAll({
+            where: { productID: productID },
+            include: [
+                {
+                    model: Rating.sequelize.models.Product,
+                    as: 'product',
+                    attributes: ['id', 'name']
+                }
+            ]
+        });
         return rating;
     }
 
     static async rate(data) {
         if (!data.productID || !data.rate) {
             throw new ServiceError('Missing required fields');
+        }
+
+        if (data.rate < 0 || data.rate > 5) {
+            throw new ServiceError('Invalid rate value. Rate must be between 0 and 5');
+
         }
 
         const product = await Product.findByPk(data.productID);

@@ -57,3 +57,4 @@ Product.init(
 );
 
 Product.belongsTo(sequelize.models.Category, { as: 'category', foreignKey: 'categoryID' });
+Product.belongsTo(sequelize.models.Restaurant, { as: 'restaurant', foreignKey: 'restaurantID' });

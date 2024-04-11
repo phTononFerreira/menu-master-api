@@ -31,3 +31,5 @@ Rating.init(
     tableName: 'ratings'
   }
 );
+
+Rating.belongsTo(sequelize.models.Product, { as: 'product', foreignKey: 'productID' });

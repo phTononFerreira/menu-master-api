@@ -50,6 +50,7 @@ class CategoryController {
       res.json(category);
     } catch (error) {
       if (error instanceof ServiceError) {
+        console.log(error)
         return res.status(404).json({ error: error.message });
       } else {
         return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
@@ -62,6 +63,7 @@ class CategoryController {
       const categories = await CategoryService.getAll(req.params.id);
       res.json(categories);
     } catch (error) {
+      console.log(error)
       if (error instanceof ServiceError) {
         return res.status(404).json({ error: error.message });
       } else {

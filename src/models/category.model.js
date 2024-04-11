@@ -31,3 +31,5 @@ Category.init({
         tableName: 'categories'
     }
 );
+
+Category.belongsTo(sequelize.models.Restaurant, { as: 'restaurant', foreignKey: 'restaurantID' });

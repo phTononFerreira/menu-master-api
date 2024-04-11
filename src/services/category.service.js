@@ -28,7 +28,17 @@ class CategoryService {
     }
 
     static async get(id) {
-        const category = await Category.findOne({ where: { id } });
+        const category = await Category.findOne({
+            where: { id },
+            include: [
+                {
+                    model: Category.sequelize.models.Restaurant,
+                    as: 'restaurant',
+                    attributes: ['id', 'name', 'logo', 'username']
+                }
+            ]
+        },
+        );
         if (!category) {
             throw new ServiceError('Category not found');
         }
@@ -37,7 +47,18 @@ class CategoryService {
 
     static async getAll(restaurantId) {
         console.log(restaurantId)
-        const categories = await Category.findAll({ where: { restaurantID: restaurantId } });
+        const categories = await Category.findAll({
+            where: {
+                restaurantID: restaurantId,
+            },
+            include: [
+                {
+                    model: Category.sequelize.models.Restaurant,
+                    as: 'restaurant',
+                    attributes: ['id', 'name', 'logo', 'username']
+                }
+            ]
+        });
         return categories;
     }
 }

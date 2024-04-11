@@ -81,11 +81,16 @@ class ProductService {
 
         let product = await Product.findOne({
             where: { id },
-            attributes: ['id', 'name', 'description', 'options', 'price', 'image', 'restaurantID', 'createdAt', 'updatedAt'],
+            attributes: ['id', 'name', 'description', 'options', 'price', 'image', 'createdAt', 'updatedAt'],
             include: [{
                 model: Product.sequelize.models.Category,
                 as: 'category',
                 attributes: ['id', 'name']
+            },
+            {
+                model: Product.sequelize.models.Restaurant,
+                as: 'restaurant',
+                attributes: ['id', 'name', 'logo', 'username']
             }]
         });
         if (!product) {
@@ -101,7 +106,7 @@ class ProductService {
 
             product = { ...product.toJSON(), averageRating };
         }
-        console.log(product)
+
         return product;
 
     }
@@ -111,12 +116,19 @@ class ProductService {
 
         let products = await Product.findAll({
             where: { restaurantID: restaurantId },
-            attributes: ['id', 'name', 'description', 'options', 'price', 'image', 'restaurantID', 'createdAt', 'updatedAt'],
-            include: [{
-                model: Product.sequelize.models.Category,
-                as: 'category',
-                attributes: ['id', 'name']
-            }]
+            attributes: ['id', 'name', 'description', 'options', 'price', 'image', 'createdAt', 'updatedAt'],
+            include: [
+                {
+                    model: Product.sequelize.models.Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Product.sequelize.models.Restaurant,
+                    as: 'restaurant',
+                    attributes: ['id', 'name', 'logo', 'username']
+                }
+            ]
         });
 
         products = await Promise.all(products.map(async (product) => {

@@ -1,8 +1,5 @@
-
 import ProductService from '../services/product.service.js';
-import APIMessages from '../utils/messages.util.js';
-import ServiceError from './../utils/serviceError.util.js';
-
+import { handleServiceError } from '../utils/serviceError.util.js';
 
 export default class ProductController {
     static async createProduct(req, res) {
@@ -10,12 +7,8 @@ export default class ProductController {
             const product = await ProductService.create(req.body, req.file, req.restaurant.id);
             res.status(201).json(product);
         } catch (error) {
-            console.log(error)
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            console.log(error);
+            return handleServiceError(error, res);
         }
     }
 
@@ -24,12 +17,8 @@ export default class ProductController {
             await ProductService.delete(req.body.id, req.restaurant.id);
             res.status(204).send();
         } catch (error) {
-            console.log("error\n\n\n:", error)
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            console.log("error\n\n\n:", error);
+            return handleServiceError(error, res);
         }
     }
 
@@ -38,12 +27,8 @@ export default class ProductController {
             const product = await ProductService.update(req.body, req.file, req.restaurant.id);
             res.status(200).json(product);
         } catch (error) {
-            console.log(error)
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            console.log(error);
+            return handleServiceError(error, res);
         }
     }
 
@@ -52,12 +37,8 @@ export default class ProductController {
             const product = await ProductService.get(req.params.id);
             res.status(200).json(product);
         } catch (error) {
-            console.log(error)
-            if (error instanceof ServiceError) {
-                return res.status(404).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            console.log(error);
+            return handleServiceError(error, res);
         }
     }
 
@@ -66,12 +47,9 @@ export default class ProductController {
             const products = await ProductService.getAll(req.params.restaurantId);
             res.status(200).json(products);
         } catch (error) {
-            console.log(error)
-            if (error instanceof ServiceError) {
-                return res.status(500).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            console.log(error);
+            return handleServiceError(error, res);
         }
     }
+    
 }

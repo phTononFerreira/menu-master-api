@@ -1,7 +1,5 @@
 import CategoryService from "../services/category.service.js";
-import APIMessages from "../utils/messages.util.js";
-import ServiceError from "../utils/serviceError.util.js";
-
+import { handleServiceError } from "../utils/serviceError.util.js";
 
 class CategoryController {
   static async createCategory(req, res) {
@@ -10,11 +8,7 @@ class CategoryController {
       const category = await CategoryService.create(req.body, req.restaurant.id);
       res.status(201).json(category);
     } catch (error) {
-      if (error instanceof ServiceError) {
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      return handleServiceError(error, res);
     }
   }
 
@@ -23,11 +17,7 @@ class CategoryController {
       await CategoryService.delete(req.body.id, req.restaurant.id);
       res.status(204).end();
     } catch (error) {
-      if (error instanceof ServiceError) {
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      return handleServiceError(error, res);
     }
   }
 
@@ -36,11 +26,7 @@ class CategoryController {
       const category = await CategoryService.update(req.body.id, req.body.data, req.restaurant.id);
       res.json(category);
     } catch (error) {
-      if (error instanceof ServiceError) {
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      return handleServiceError(error, res);
     }
   }
 
@@ -49,12 +35,8 @@ class CategoryController {
       const category = await CategoryService.get(req.params.id);
       res.json(category);
     } catch (error) {
-      if (error instanceof ServiceError) {
-        console.log(error)
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      console.log(error)
+      return handleServiceError(error, res);
     }
   }
 
@@ -64,11 +46,7 @@ class CategoryController {
       res.json(categories);
     } catch (error) {
       console.log(error)
-      if (error instanceof ServiceError) {
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      return handleServiceError(error, res);
     }
   }
 }

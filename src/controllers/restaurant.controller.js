@@ -1,21 +1,15 @@
-
 import RestaurantService from '../services/restaurant.service.js';
-import APIMessages from '../utils/messages.util.js';
-import ServiceError from '../utils/serviceError.util.js';
-
+import { handleServiceError } from '../utils/serviceError.util.js';
 
 export default class RestaurantController {
+
     static async createRestaurant(req, res) {
         try {
             const restaurant = await RestaurantService.create(req.body, req.file);
             res.status(201).json(restaurant);
         } catch (error) {
-            console.log(error)
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            console.log(error);
+            handleServiceError(error, res);
         }
     }
 
@@ -24,11 +18,7 @@ export default class RestaurantController {
             const restaurants = await RestaurantService.list();
             res.status(200).json(restaurants);
         } catch (error) {
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            handleServiceError(error, res);
         }
     }
 
@@ -36,15 +26,11 @@ export default class RestaurantController {
         try {
             const { id } = req.body;
             const { username } = req.params;
-            
+
             const restaurant = await RestaurantService.get(id, username);
             res.status(200).json(restaurant);
         } catch (error) {
-            if (error instanceof ServiceError) {
-                return res.status(404).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            handleServiceError(error, res);
         }
     }
 
@@ -55,11 +41,7 @@ export default class RestaurantController {
             res.status(200).json(updatedRestaurant);
         } catch (error) {
             console.log(error);
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            handleServiceError(error, res);
         }
     }
 
@@ -70,11 +52,7 @@ export default class RestaurantController {
             res.status(204).send();
         } catch (error) {
             console.log(error);
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            handleServiceError(error, res);
         }
     }
 
@@ -89,11 +67,7 @@ export default class RestaurantController {
 
             return res.status(200).json({ token });
         } catch (error) {
-            if (error instanceof ServiceError) {
-                return res.status(400).json({ error: error.message });
-            } else {
-                return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-            }
+            handleServiceError(error, res);
         }
     }
 }

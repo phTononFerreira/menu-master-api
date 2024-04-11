@@ -1,5 +1,4 @@
-import APIMessages from "../utils/messages.util.js";
-import ServiceError from "../utils/serviceError.util.js";
+import { handleServiceError } from '../utils/serviceError.util.js';
 import RatingService from './../services/rating.service.js';
 
 class RatingController {
@@ -8,26 +7,18 @@ class RatingController {
       const rating = await RatingService.get(req.params.productID);
       res.json(rating);
     } catch (error) {
-      console.log(error)
-      if (error instanceof ServiceError) {
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      console.log(error);
+      return handleServiceError(error, res);
     }
   }
-
+  
   static async rate(req, res) {
     try {
       const rating = await RatingService.rate(req.body);
       res.status(201).json(rating);
     } catch (error) {
-      console.log(error)
-      if (error instanceof ServiceError) {
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      console.log(error);
+      return handleServiceError(error, res);
     }
   }
 
@@ -36,12 +27,8 @@ class RatingController {
       const avgRating = await RatingService.rateAverage(req.params.productID);
       res.json(avgRating);
     } catch (error) {
-      console.log(error)
-      if (error instanceof ServiceError) {
-        return res.status(404).json({ error: error.message });
-      } else {
-        return res.status(500).json({ error: APIMessages.INTERNAL_SERVER_ERROR });
-      }
+      console.log(error);
+      return handleServiceError(error, res);
     }
   }
 }

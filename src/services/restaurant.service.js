@@ -7,6 +7,7 @@ import Product from '../models/product.model.js';
 import Rating from '../models/rating.model.js';
 import Restaurant from '../models/restaurant.model.js';
 import { uploadImage } from '../utils/cloudinary.util.js';
+import client from '../utils/redis.util.js';
 import ServiceError from '../utils/serviceError.util.js';
 
 dotenv.config();
@@ -45,9 +46,17 @@ class RestaurantService {
 
 
     static async list() {
-        const restaurants = await Restaurant.findAll({
+        let restaurants = await client.getSync('restaurants');
+        if (restaurants) {
+            return JSON.parse(restaurants);
+        }
+
+        restaurants = await Restaurant.findAll({
             attributes: { exclude: ['password'] }
         });
+
+        await client.setSync('restaurants', JSON.stringify(restaurants));
+
         return restaurants;
     }
 

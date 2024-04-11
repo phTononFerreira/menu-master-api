@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import pkg from 'validator';
+import Category from '../models/category.model.js';
+import Product from '../models/product.model.js';
+import Rating from '../models/rating.model.js';
 import Restaurant from '../models/restaurant.model.js';
 import { uploadImage } from '../utils/cloudinary.util.js';
 import ServiceError from '../utils/serviceError.util.js';
@@ -108,6 +111,14 @@ class RestaurantService {
         if (!isUUID(id)) {
             throw new ServiceError('Invalid UUID for restaurant ID');
         }
+
+        const products = await Product.findAll({ where: { restaurantID: id } })
+        await Promise.all(products.map(async (product) => {
+            await Rating.destroy({ where: { productID: product.id } });
+        }));
+
+        await Category.destroy({ where: { restaurantID: id } });
+        await Product.destroy({ where: { restaurantID: id } });
 
         const restaurant = await Restaurant.findByPk(id);
         if (!restaurant) {

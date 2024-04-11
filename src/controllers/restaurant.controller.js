@@ -69,6 +69,7 @@ export default class RestaurantController {
             await RestaurantService.delete(id);
             res.status(204).send();
         } catch (error) {
+            console.log(error);
             if (error instanceof ServiceError) {
                 return res.status(400).json({ error: error.message });
             } else {

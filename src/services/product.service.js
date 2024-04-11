@@ -33,10 +33,11 @@ class ProductService {
     }
 
     static async delete(id, restaurantId) {
-        console.log(id, restaurantId)
         if (!restaurantId) {
             throw new ServiceError('Missing \'id\' field');
         }
+
+        await Rating.destroy({ where: { productID: id } });
 
         const product = await Product.findOne({ where: { id, restaurantID: restaurantId } });
         if (!product) {

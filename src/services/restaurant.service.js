@@ -42,7 +42,9 @@ class RestaurantService {
 
 
     static async list() {
-        const restaurants = await Restaurant.findAll();
+        const restaurants = await Restaurant.findAll({
+            attributes: { exclude: ['password'] }
+        });
         return restaurants;
     }
 
@@ -60,7 +62,10 @@ class RestaurantService {
         }
 
         if (!restaurant && usernameSearch) {
-            restaurant = await Restaurant.findOne({ where: { username: usernameSearch } });
+            restaurant = await Restaurant.findOne({
+                where: { username: usernameSearch },
+                attributes: { exclude: ['password'] }
+            });
             if (!restaurant) {
                 throw new ServiceError('Restaurant not found');
             }

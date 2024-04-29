@@ -8,4 +8,10 @@ APIMessages.ERROR_CONNECT = (error) => `❌(Sequelize) Error connecting to Postg
 
 APIMessages.INTERNAL_SERVER_ERROR = 'Internal server error (500)';
 
+APIMessages.ERROR_UPLOAD = 'Error uploading file';
+APIMessages.ERROR_UPLOAD_IMAGE = 'Please upload an image file';
+APIMessages.ERROR_UPLOAD_FILE = (field_name) => `Please, send a file in the "${field_name}" field`;
+APIMessages.ERROR_UPLOAD_SIZE = 'File size exceeds the limit';
+
+
 export default APIMessages;

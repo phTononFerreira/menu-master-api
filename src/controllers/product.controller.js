@@ -17,7 +17,6 @@ export default class ProductController {
             await ProductService.delete(req.body.id, req.restaurant.id);
             res.status(204).send();
         } catch (error) {
-            console.log("error\n\n\n:", error);
             return handleServiceError(error, res);
         }
     }

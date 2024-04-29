@@ -44,20 +44,20 @@ class RestaurantService {
         return restaurant;
     }
 
-
     static async list() {
-        let restaurants = await client.getSync('cache:restaurants');
-        if (restaurants) {
-            return JSON.parse(restaurants);
+        let restaurants = await client.get('cache:restaurants');
+        if (!restaurants) {
+            restaurants = await Restaurant.findAll({
+                attributes: { exclude: ['password'] }
+            });
+    
+            await client.set('cache:restaurants', restaurants, { ex: 5, nx: true });
         }
-
-        restaurants = await Restaurant.findAll({
-            attributes: { exclude: ['password'] }
-        });
-        await client.setSync('cache:restaurants', JSON.stringify(restaurants), 10);
-
+        
         return restaurants;
     }
+    
+    
 
     static async get(id, usernameSearch) {
         if (!id && !usernameSearch) {

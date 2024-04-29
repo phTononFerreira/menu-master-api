@@ -1,6 +1,7 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
+import morgan from 'morgan';
 import categoryRouter from './routes/category.router.js';
 import productRouter from './routes/product.router.js';
 import ratingRouter from './routes/rating.router.js';
@@ -11,6 +12,8 @@ import sequelize from './utils/sequelize.util.js';
 dotenv.config();
 
 const app = express();
+
+app.use(morgan('combined'));
 
 app.use(express.json());
 

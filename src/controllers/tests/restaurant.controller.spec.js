@@ -140,4 +140,177 @@ describe('RestaurantController', () => {
             expect(handleServiceError).toHaveBeenCalledWith(error, res);
         });
     });
+
+    describe('listRestaurants', () => {
+        // Teste para garantir que o método listRestaurants retorne a lista de restaurantes.
+        it('should list all restaurants', async () => {
+            const req = {};
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+            const mockRestaurants = [
+                { id: 'restaurant_id_1', name: 'Restaurant 1' },
+                { id: 'restaurant_id_2', name: 'Restaurant 2' }
+            ];
+
+            RestaurantService.list.mockResolvedValue(mockRestaurants);
+
+            await RestaurantController.listRestaurants(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith(mockRestaurants);
+        });
+
+        // Teste para garantir que o método listRestaurants lide corretamente com erros.
+        it('should handle error when listing restaurants', async () => {
+            const req = {};
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+            const error = new Error('Test Error');
+
+            RestaurantService.list.mockRejectedValue(error);
+
+            await RestaurantController.listRestaurants(req, res);
+
+            expect(handleServiceError).toHaveBeenCalledWith(error, res);
+        });
+
+        describe('getRestaurant', () => {
+            // Teste para garantir que o método getRestaurant retorne um restaurante pelo ID e username.
+            it('should get a restaurant by ID and username and return it', async () => {
+                const req = {
+                    params: { id: 'restaurant_id' },
+                    body: { username: 'test_user' }
+                };
+                const res = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn()
+                };
+                const mockRestaurant = { id: 'restaurant_id', name: 'Test Restaurant' };
+
+                RestaurantService.get.mockResolvedValue(mockRestaurant);
+
+                await RestaurantController.getRestaurant(req, res);
+
+                expect(res.status).toHaveBeenCalledWith(200);
+                expect(res.json).toHaveBeenCalledWith(mockRestaurant);
+            });
+
+            // Teste para garantir que o método getRestaurant lide corretamente com erros.
+            it('should handle error when getting a restaurant', async () => {
+                const req = {
+                    params: { id: 'restaurant_id' },
+                    body: { username: 'test_user' }
+                };
+                const res = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn()
+                };
+                const error = new Error('Test Error');
+
+                RestaurantService.get.mockRejectedValue(error);
+
+                await RestaurantController.getRestaurant(req, res);
+
+                expect(handleServiceError).toHaveBeenCalledWith(error, res);
+            });
+        });
+        describe('getRestaurant', () => {
+            // Teste para garantir que o método getRestaurant retorne um restaurante pelo ID e username.
+            it('should get a restaurant by ID and username and return it', async () => {
+                const req = {
+                    params: { id: 'restaurant_id' },
+                    body: { username: 'test_user' }
+                };
+                const res = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn()
+                };
+                const mockRestaurant = { id: 'restaurant_id', name: 'Test Restaurant' };
+
+                RestaurantService.get.mockResolvedValue(mockRestaurant);
+
+                await RestaurantController.getRestaurant(req, res);
+
+                expect(res.status).toHaveBeenCalledWith(200);
+                expect(res.json).toHaveBeenCalledWith(mockRestaurant);
+            });
+
+            // Teste para garantir que o método getRestaurant lide corretamente com erros.
+            it('should handle error when getting a restaurant', async () => {
+                const req = {
+                    params: { id: 'restaurant_id' },
+                    body: { username: 'test_user' }
+                };
+                const res = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn()
+                };
+                const error = new Error('Test Error');
+
+                RestaurantService.get.mockRejectedValue(error);
+
+                await RestaurantController.getRestaurant(req, res);
+
+                expect(handleServiceError).toHaveBeenCalledWith(error, res);
+            });
+        });
+        describe('authenticate', () => {
+            // Teste para garantir que o método authenticate retorne um token de autenticação válido.
+            it('should authenticate and return a token', async () => {
+                const req = {
+                    body: { username: 'test_user', password: 'test_password' }
+                };
+                const res = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn()
+                };
+                const mockToken = 'mock_token';
+    
+                RestaurantService.login.mockResolvedValue(mockToken);
+    
+                await RestaurantController.authenticate(req, res);
+    
+                expect(res.status).toHaveBeenCalledWith(200);
+                expect(res.json).toHaveBeenCalledWith({ token: mockToken });
+            });
+    
+            // Teste para garantir que o método authenticate lide corretamente com erros.
+            it('should handle error when authenticating', async () => {
+                const req = {
+                    body: { username: 'test_user', password: 'test_password' }
+                };
+                const res = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn()
+                };
+                const error = new Error('Test Error');
+    
+                RestaurantService.login.mockRejectedValue(error);
+    
+                await RestaurantController.authenticate(req, res);
+    
+                expect(handleServiceError).toHaveBeenCalledWith(error, res);
+            });
+    
+            // Teste para garantir que o método authenticate retorne um erro quando as credenciais estão ausentes.
+            it('should return an error when credentials are missing', async () => {
+                const req = {
+                    body: { username: '', password: '' }
+                };
+                const res = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn()
+                };
+    
+                await RestaurantController.authenticate(req, res);
+    
+                expect(res.status).toHaveBeenCalledWith(400);
+                expect(res.json).toHaveBeenCalledWith({ error: 'Username and password are required' });
+            });
+        });
+    });
 });

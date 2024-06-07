@@ -2,6 +2,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
+import limiter from './middlewares/rateLimiter.middleware.js';
 import categoryRouter from './routes/category.router.js';
 import productRouter from './routes/product.router.js';
 import ratingRouter from './routes/rating.router.js';
@@ -18,6 +19,8 @@ app.use(morgan('combined'));
 app.use(express.json());
 
 app.use(cors());
+
+app.use(limiter);
 
 app.use(restaurantRouter);
 app.use(categoryRouter);

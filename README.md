@@ -1,11 +1,4 @@
-
-<h1 align="center">
-  <br>
-<img src="https://res.cloudinary.com/dzkrz6yzs/image/upload/v1711984700/ttm2je6yc5wnpj9uadal.png" alt="Markdownify" width="200"></a>
-  <br>
-  Menu Master
-  <br>
-</h1>
+![image](https://github.com/user-attachments/assets/7c1373f6-53c8-434b-9d9f-8a1c496ba04d)
 
 <h4 align="center">Estrutura back-end do projeto Menu Master ⚙️</h4>
 
